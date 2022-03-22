@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +18,13 @@ use App\Http\Controllers\NewsController;
 |
 */
 
-Route::get('/index', [IndexController::class, 'index']);
+Route::get('/', [IndexController::class, 'index']);
 
+// Admin routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
+    Route::resource('categories', AdminCategoryController::class);
+    Route::resource('news', AdminNewsController::class);
+});
 
 Route::get('/category', [CategoryController::class, 'index'])
 ->name('category');
@@ -26,3 +33,4 @@ Route::get('/{category}/news', [NewsController::class, 'NewsCategory'])
 Route::get('/{category}/news/{id}', [NewsController::class, 'NewsShow'])
 ->where('id','\d+')
 ->name('news.show');
+
