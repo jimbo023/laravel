@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    // public function news()
+    // public function index()
     // {
     //     $news = $this->getNews();
     //     return view('news.index',[
@@ -17,13 +17,10 @@ class NewsController extends Controller
     public function NewsCategory(string $category)
     {
         $newsList = $this->getNews();
-        foreach($newsList as $news){
-            if($news['category'] == $category){
-                return view('news.index',[
-                    'newsList' => $this->getNews($category)
-                ]);
-            }
-        }
+
+        return view('news.index',[
+            'newsList' => $this->getNews($category)
+        ]);
     }
 
     public function NewsShow($category, string $id)

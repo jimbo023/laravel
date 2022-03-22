@@ -29,6 +29,7 @@ class Controller extends BaseController
                 'title' => $faker->jobTitle(),
                 'author' => $faker->userName(),
                 'category' => $category,
+                'image' => $faker->imageUrl(250, 170),
                 'discription' => $faker->text(75)
             ];
         }
@@ -42,6 +43,7 @@ class Controller extends BaseController
                     'title' => $faker->jobTitle(),
                     'author' => $faker->userName(),
                     'category' => $category,
+                    'image' => $faker->imageUrl(250, 170),
                     'discription' => $faker->text(75)
                 ];
             }
@@ -61,6 +63,7 @@ class Controller extends BaseController
                     'title' => $faker->jobTitle(),
                     'author' => $faker->userName(),
                     'category' => $this->getCategory()[$indexCategory],
+                    'image' => $faker->imageUrl(250, 170),
                     'discription' => $faker->text(75)
                 ];
             }
