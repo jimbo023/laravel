@@ -25,7 +25,7 @@
     }
   </style>
 
-
+<link href="{{ asset('css/album.css') }}" rel="stylesheet">
 </head>
 
 <body>
