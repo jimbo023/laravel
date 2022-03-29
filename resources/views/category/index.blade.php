@@ -8,11 +8,11 @@
             alt="null">
         <div class="card-body">
             <p class="card-text">
-                {{ $category }}
+                {{ $category->title }}
             </p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="{{ route('news', ['category' => "$category"]) }}">
+                    <a href="{{ route('news', ['category' => "$category->title"]) }}">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Посмотреть</button>
                     </a>
                 </div>

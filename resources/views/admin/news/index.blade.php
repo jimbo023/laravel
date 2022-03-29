@@ -9,6 +9,33 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
   </div>
 </div>
 </div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Название</th>
+      <th scope="col">Автор</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Управление</th>
+    </tr>
+  </thead>
+  @foreach ($newsList as $news)
+  <tr>
+    <th scope="row">{{ $news->id }}</th>
+    <td>{{ $news->title }}</td>
+    <td>{{ $news->author }}</td>
+    <td>{{ $news->discription }}</td>
+    <td>
+      <a href="#">Уд.</a>
+      <a href="{{ route('admin.news.edit', ['news' => $news->id]) }}" style="color: red;">Ред.</a>
+    </td>
+  </tr>
+  @endforeach
+  <tbody>
+  </tbody>
+</table>
+
 @endsection
 @section('title') Новости
     @parent

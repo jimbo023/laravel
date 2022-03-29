@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Source;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class CategoryController extends Controller
+class SourcesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = app(Category::class);
+        $source = app(Source::class);
 
-        return view('admin.categories.index', [
-            'categories' => $category->getCategories()
+        return view('admin.sources.index', [
+            'sources' => $source->getSources()
         ]);
     }
 
@@ -30,7 +29,18 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.sources.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
     }
 
     /**
@@ -52,7 +62,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.categories.edit');
+        return view('admin.sources.edit');
     }
 
     /**

@@ -4,7 +4,7 @@
   <h1 class="h2">Список категорий</h1>
   <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group me-2">
-      <a href="{{ route('admin.categories.create') }}"" class=" btn btn-sm btn-outline-secondary">Добавить категорию</a>
+      <a href="{{ route('admin.sources.create') }}"" class=" btn btn-sm btn-outline-secondary">Добавить источник</a>
     </div>
   </div>
 </div>
@@ -13,19 +13,19 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Название</th>
-      <th scope="col">Описание</th>
+      <th scope="col">Источник</th>
+      <th scope="col">Ссылка на источник</th>
       <th scope="col">Управление</th>
     </tr>
   </thead>
-  @foreach ($categories as $category)
+  @foreach ($sources as $source)
   <tr>
-    <th scope="row">{{ $category->id }}</th>
-    <td>{{ $category->title }}</td>
-    <td>{{ $category->discription }}</td>
+    <th scope="row">{{ $source->id }}</th>
+    <td>{{ $source->name }}</td>
+    <td>{{ $source->urlSource }}</td>
     <td>
       <a href="#">Уд.</a>
-      <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" style="color: red;">Ред.</a>
+      <a href="{{ route('admin.categories.edit', ['category' => $source->id]) }}" style="color: red;">Ред.</a>
     </td>
   </tr>
   @endforeach
