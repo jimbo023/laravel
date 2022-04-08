@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\EditRequest;
 use Illuminate\Http\Request;
 use App\Models\Order;
 
@@ -72,16 +73,16 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(EditRequest $request, Order $order)
     {
-        $status = $order->fill($request->only(['name', 'phone', 'email', 'discription', 'status']))
+        $status = $order->fill($request->validated())
             ->save();
         if ($status) {
             return redirect()->route('admin.orders.index')
-                ->with('success', 'Заявка успешно обновлена');
+                ->with('success', __('messages.admin.orders.update.success'));
         }
 
-        return back() - with('error', 'Ошибка при обновлении заявки');
+        return back() - with('error', __('messages.admin.orders.update.fail'));
     }
 
     /**
@@ -90,8 +91,13 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Order $order)
     {
-        //
+        try{
+            $order->delete();
+            return response()->json(['status' => 'ok']);
+        }catch(\Exception $e){
+            response()->json(['status' => 'error'], 400);
+        };
     }
 }

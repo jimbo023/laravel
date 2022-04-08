@@ -19,7 +19,7 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
     </tr>
   </thead>
   @foreach ($orders as $order)
-  <tr>
+  <tr @if($order->status === 'work') class="bg-warning" @endif>
     <th scope="row">{{ $order->id }}</th>
     <td>{{ $order->name }}</td>
     <td>{{ $order->phone }}</td>
@@ -27,7 +27,8 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
     <td>{{ $order->discription }}</td>
     <td>{{ $order->status }}</td>
     <td>
-      <a href="{{ route('admin.orders.edit', ['order' => $order->id]) }}">Редакт.</a>
+      <a href="javascript:;" class="delete" rel="{{ $order->id }}">Уд.</a>
+      <a href="{{ route('admin.orders.edit', ['order' => $order->id]) }}" style="color: red;">Редакт.</a>
     </td>
   </tr>
   @endforeach
@@ -38,3 +39,36 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
 @section('title') Заказы
     @parent
 @endsection
+
+@push('js')
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(){
+    const el = document.querySelectorAll(".delete");
+    el.forEach(function(element, index){
+      element.addEventListener("click", function(){
+        const id = this.getAttribute("rel");
+        if(confirm(`Подтвердите удаление заказа с ID ${id}?`)){
+          send(`/admin/orders/${id}`).then(()=> {
+            alert("Запись удалена");
+            location.reload();
+          })
+        }
+      })
+    });
+  })
+
+  async function send(url){
+    let response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+
+    let result = await response.json();
+    return result.ok;
+  }
+</script>
+@endpush

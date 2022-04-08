@@ -11,9 +11,10 @@
 
     <div class="form-group">
         <label for="category_id">Категория</label>
-        <select name="category_id" id="category_id" class="form-control" required="required">
+        <select name="category_id" id="category_id" class="form-control">
             @foreach($categories as $category)
-            <option value="{{ $category->id }}" @if($category->id === old('category_id')) selected @endif> {{
+            <option value="{{ $category->id }}" 
+                @if($category->id === $news->category_id) selected @endif> {{
                 $category->title }}</option>
             @endforeach
         </select>
@@ -25,7 +26,7 @@
             <option value="{{ $source->id }}" @if($source->id === old('source_id')) selected @endif> {{
                 $source->urlSource }}</option>
             @endforeach
-            <option>Нет источника</option>
+            <option value="">Нет источника</option>
         </select>
     </div>
     <div class="form-group">
@@ -34,7 +35,7 @@
     </div>
     <div class="form-group">
         <label for="author">Автор</label>
-        <input type="text" class="form-control" id="author" name="author" required="required" value="{{$news->author}}">
+        <input type="text" class="form-control" id="author" name="author" value="{{$news->author}}">
     </div>
     <div class="form-group">
         <label for="title">Изображение</label>
