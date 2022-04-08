@@ -10,7 +10,7 @@
         <p class="card-text">{{ $news->discription }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <a href="{{ route('news.show', ['id' => $news->id, 'category' => $news->category]) }}">
+            <a href="{{ route('news.show', ['id' => $news->id, 'category' => $news->category->title]) }}">
             <button type="button" class="btn btn-sm btn-outline-secondary">Прочитать</button>
             </a>
           </div>
@@ -23,6 +23,6 @@
     <h2>Новостей данной категории нет</h2>
 @endforelse
 <br>
-{{ $newsList->links()}}
+{{-- {{ $newsList->links()}} --}}
 @endsection
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Source\CreateRequest;
+use App\Http\Requests\Source\EditRequest;
 use App\Models\Source;
 use Illuminate\Http\Request;
 
@@ -36,15 +38,15 @@ class SourcesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $source = Source::create($request->only(['name', 'urlSource']));
+        $source = Source::create($request->validated());
         if ($source) {
             return redirect()->route('admin.sources.index')
-                ->with('success', 'Источник успешно добавлен');
+                ->with('success', __('messages.admin.sources.create.success'));
         }
 
-        return back() - with('error', 'Ошибка при добавлении источника');
+        return back() - with('error', __('messages.admin.sources.create.fail'));
     }
 
     /**
@@ -78,15 +80,15 @@ class SourcesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Source $source)
+    public function update(EditRequest $request, Source $source)
     {
-        $status = $source->fill($request->only(['name', 'urlSource']))->save();
+        $status = $source->fill($request->validated())->save();
         if ($status) {
             return redirect()->route('admin.sources.index')
-                ->with('success', 'Источник успешно обновлен');
+                ->with('success', __('messages.admin.sources.update.success'));
         }
 
-        return back() - with('error', 'Ошибка при обновлении источника');
+        return back() - with('error', __('messages.admin.sources.update.fail'));
     }
 
     /**
@@ -95,8 +97,13 @@ class SourcesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Source $source)
     {
-        //
+        try{
+            $source->delete();
+            return response()->json(['status' => 'ok']);
+        }catch(\Exception $e){
+            response()->json(['status' => 'error'], 400);
+        };
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\CreateRequest;
+use App\Http\Requests\News\EditRequest;
 use App\Models\News;
 use App\Models\Category;
 use App\Models\Source;
@@ -42,15 +44,15 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $news = News::create($request->only(['category_id', 'title', 'author', 'discription', 'image']));
+        $news = News::create($request->validated());
         if($news){
             return redirect()->route('admin.news.index')
-            ->with('success', 'Новость успешно добавлена');
+            ->with('success', __('messages.admin.news.create.success'));
         }
 
-        return back()-with('error', 'Ошибка при добавлении новости');
+        return back()-with('error', __('messages.admin.news.create.fail'));
     }
 
     /**
@@ -75,16 +77,16 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(EditRequest $request, News $news)
     {
-        $status = $news->fill($request->only(['category_id', 'title', 'author', 'discription', 'image', 'source_id']))
+        $status = $news->fill($request->validated())
                             ->save();
         if($status) {
             return redirect()->route('admin.news.index')
-            ->with('success', 'Новость успешно обновлена');
+            ->with('success', __('messages.admin.news.update.success'));
         }
 
-        return back()-with('error', 'Ошибка при обновлении новости');
+        return back()-with('error', __('messages.admin.news.update.fail'));
     }
 
     /**
@@ -93,8 +95,13 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //
+        try {
+            $news->delete();
+            return response()->json(['status' => 'ok']);
+        }catch(\Exception $e){
+            return response()->json(['status' => 'error'], 400);
+        }
     }
 }

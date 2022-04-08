@@ -26,7 +26,7 @@
     <td>{{ $category->discription }}</td>
     <td>{{ $category->news_count }}</td>
     <td>
-      <a href="#">Уд.</a>
+      <a href="javascript:;" class="delete" rel="{{ $category->id }}">Уд.</a>
       <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" style="color: red;">Ред.</a>
     </td>
   </tr>
@@ -40,3 +40,36 @@
 @parent
 
 @endsection
+
+@push('js')
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function(){
+    const el = document.querySelectorAll(".delete");
+    el.forEach(function(element, index){
+      element.addEventListener("click", function(){
+        const id = this.getAttribute("rel");
+        if(confirm(`Подтвердите удаление категории с ID ${id}?`)){
+          send(`/admin/categories/${id}`).then(()=> {
+            alert("Запись удалена");
+            location.reload();
+          })
+        }
+      })
+    });
+  })
+
+  async function send(url){
+    let response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    })
+
+    let result = await response.json();
+    return result.ok;
+  }
+</script>
+@endpush

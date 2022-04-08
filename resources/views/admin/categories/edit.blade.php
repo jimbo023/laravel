@@ -10,11 +10,11 @@
         @method('put')
         <div class="form-group">
             <label for="title">Наименование</label>
-            <input type="text" class="form-control" id="title" name="title" required="required" value="{{ $category->title }}">
+            <input type="text" class="form-control" id="title" name="title" value="{{ $category->title }}">
         </div>
         <div class="form-group">
             <label for="discription">Описание</label>
-            <input type="text" class="form-control" id="discription" name="discription" required="required" value="{{ $category->discription }}">
+            <input type="text" class="form-control" id="discription" name="discription" value="{{ $category->discription }}">
         </div>
         <br />
         <button type="submit" class="btn btn-secondary btn-sm" style="margin: auto; display: flex">Сохранить</button>

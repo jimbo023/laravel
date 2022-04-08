@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Category\EditRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,10 +44,10 @@ class CategoryController extends Controller
         $category = Category::create($data);
         if($category){
             return redirect()->route('admin.categories.index')
-            ->with('success', 'Категория успешно добавлена');
+            ->with('success', __('messages.admin.categories.create.success'));
         }
 
-        return back()-with('error', 'Ошибка при добавлении категории');
+        return back()-with('error', __('messages.admin.categories.create.fail'));
     }
 
     /**
@@ -69,16 +70,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(EditRequest $request, Category $category)
     {
-        $status = $category->fill($request->only(['title', 'discription']))
+        $status = $category->fill($request->validated())
                             ->save();
         if($status) {
             return redirect()->route('admin.categories.index')
-            ->with('success', 'Категория успешно обновлена');
+            ->with('success', __('messages.admin.categories.update.success'));
         }
 
-        return back()-with('error', 'Ошибка при обновлении категории');
+        return back()-with('error', __('messages.admin.categories.update.success'));
     }
 
     /**
@@ -87,8 +88,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        try{
+            $category->delete();
+            return response()->json(['status'=>'ok']);
+        }catch (\Exception $e){
+            return response()->json(['status'=> 'error'], 400);
+        }
     }
 }
