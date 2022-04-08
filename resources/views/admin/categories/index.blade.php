@@ -8,13 +8,14 @@
     </div>
   </div>
 </div>
-
+@include('inc.messages')
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Название</th>
       <th scope="col">Описание</th>
+      <th scope="col">Кол-во новостей</th>
       <th scope="col">Управление</th>
     </tr>
   </thead>
@@ -23,6 +24,7 @@
     <th scope="row">{{ $category->id }}</th>
     <td>{{ $category->title }}</td>
     <td>{{ $category->discription }}</td>
+    <td>{{ $category->news_count }}</td>
     <td>
       <a href="#">Уд.</a>
       <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}" style="color: red;">Ред.</a>
@@ -32,7 +34,7 @@
   <tbody>
   </tbody>
 </table>
-
+{{$categories->links()}}
 @endsection
 @section('title') Категории
 @parent

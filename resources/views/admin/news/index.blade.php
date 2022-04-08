@@ -9,11 +9,12 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
   </div>
 </div>
 </div>
-
+@include('inc.messages')
 <table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Категория</th>
       <th scope="col">Название</th>
       <th scope="col">Автор</th>
       <th scope="col">Описание</th>
@@ -23,6 +24,7 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
   @foreach ($newsList as $news)
   <tr>
     <th scope="row">{{ $news->id }}</th>
+    <td>{{ $news->category->title }}</td>
     <td>{{ $news->title }}</td>
     <td>{{ $news->author }}</td>
     <td>{{ $news->discription }}</td>
@@ -35,7 +37,7 @@ class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-cente
   <tbody>
   </tbody>
 </table>
-
+{{$newsList->links()}}
 @endsection
 @section('title') Новости
     @parent

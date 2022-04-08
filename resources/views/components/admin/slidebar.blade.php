@@ -25,6 +25,12 @@
             Источники
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link @if (request()->routeIs('admin.orders.*')) active @endif" href="{{ route('admin.orders.index') }}">
+            <span data-feather="activity"></span>
+            Заявки на заказ
+          </a>
+        </li>
       </ul>
     </div>
   </nav>

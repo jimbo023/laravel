@@ -15,21 +15,17 @@ class NewsController extends Controller
     //     ]);
     // }   
 
-    public function NewsCategory(string $category)
+    public function NewsCategory()
     {
-        $news = app(News::class);
-
         return view('news.index',[
-            'newsList' => $news->getNewsByCategory($category)
+            'newsList' => News::with('category')->paginate(5)
         ]);
     }
 
-    public function NewsShow($id, $category)
+    public function NewsShow(News $news)
     {
-        $news = app(News::class);
-
         return view('news.show',[
-            'showList' => $news->getNewsById($id, $category)
+            'showList' => $news
         ]);
     }
 }

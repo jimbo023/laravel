@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
@@ -17,6 +18,7 @@ class OrderController extends Controller
         return view('order.index');
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -24,7 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('order.create');
     }
 
     /**
@@ -35,10 +37,13 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = json_encode($request->except('_token'));
-        $token = date('H:i:s');
-        file_put_contents("storage/orders/$token.txt",  $order);
-        return response(view('order.success'), 201);
+        $data = $request->only(['name', 'phone', 'email', 'discription']);
+        $orders = Order::create($data);
+        if($orders){
+            return view('order.success');
+        }
+
+        return back()-with('error', 'Ошибка при отправке');
     }
 
     /**

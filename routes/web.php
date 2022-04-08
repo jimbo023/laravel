@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\SourcesController as AdminSourcesController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
     Route::resource('news', AdminNewsController::class);
     Route::get('/', AdminIndexController::class)->name('index');
     Route::resource('sources', AdminSourcesController::class);
+    Route::resource('orders', AdminOrderController::class);
 });
 
 Route::get('/category', [CategoryController::class, 'index'])

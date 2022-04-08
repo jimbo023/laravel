@@ -9,9 +9,8 @@ class CategoryController extends Controller
 {
     public function index() 
     {
-        $category = app(Category::class);
         return view('category.index', [
-            'categoryList' => $category->getCategories()
+            'categoryList' => Category::all()
          ]);
     }
 }
