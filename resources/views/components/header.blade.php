@@ -4,7 +4,7 @@
       <div class="col-sm-4 offset-md-1 py-4" style="display: flex; flex-direction: column; align-items: end">
         <h4 class="text-white">Полезное</h4>
         <ul class="list-unstyled">
-          <li><a href="{{ route('order.index') }}" class="text-white">Заказать выгрузку</a></li>
+          <li><a href="{{ route('order.create') }}" class="text-white">Заказать выгрузку</a></li>
           <li><a href="{{ route('feedback.index') }}" class="text-white">Оставить отзыв</a></li>
         </ul>
       </div>

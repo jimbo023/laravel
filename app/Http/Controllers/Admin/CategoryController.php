@@ -16,10 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = app(Category::class);
-
         return view('admin.categories.index', [
-            'categories' => $category->getCategories()
+            'categories' => Category::withCount('news')->paginate(7)
         ]);
     }
 
@@ -39,9 +37,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function store(Request $request)
     {
-        //
+        $data = $request->only(['title', 'discription']);
+        $category = Category::create($data);
+        if($category){
+            return redirect()->route('admin.categories.index')
+            ->with('success', 'Категория успешно добавлена');
+        }
+
+        return back()-with('error', 'Ошибка при добавлении категории');
     }
 
     /**
@@ -50,9 +55,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        return view('admin.categories.edit');
+        return view('admin.categories.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
@@ -62,9 +69,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $status = $category->fill($request->only(['title', 'discription']))
+                            ->save();
+        if($status) {
+            return redirect()->route('admin.categories.index')
+            ->with('success', 'Категория успешно обновлена');
+        }
+
+        return back()-with('error', 'Ошибка при обновлении категории');
     }
 
     /**

@@ -3,7 +3,7 @@
 @forelse ($newsList as $news)
 <div class="col">
     <div class="card shadow-sm">
-      <a href="{{ route('news.show', ['id' => $news->id, 'category' => $news->category]) }}">
+      <a href="{{ route('news.show', ['id' => $news->id, 'category' => $news->category->title]) }}">
           <img src="{{ $news->image }}" width="100%" height="100%">
       </a>
       <div class="card-body">
@@ -22,4 +22,7 @@
 @empty
     <h2>Новостей данной категории нет</h2>
 @endforelse
+<br>
+{{ $newsList->links()}}
 @endsection
+

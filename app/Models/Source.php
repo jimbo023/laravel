@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class Source extends Model
@@ -12,12 +14,10 @@ class Source extends Model
 
     protected $sources = 'sources';
 
-    public function getSources(){
-        return DB::table($this->sources)
-        ->get()->toArray();
-    }
+    protected $fillable = ['name', 'urlSource'];
 
-    public function getSourcesById($id){
-        return DB::table($this->sources)->find($id);
+    public function news()
+    {
+        return $this->hasMany(News::class);
     }
 }

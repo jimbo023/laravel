@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Source;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
-class SourcesController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class SourcesController extends Controller
      */
     public function index()
     {
-        return view('admin.sources.index', [
-            'sources' => Source::with('news')->paginate(7)
+        return view('admin.orders.index', [
+            'orders' => Order::all()
         ]);
     }
 
@@ -27,7 +27,7 @@ class SourcesController extends Controller
      */
     public function create()
     {
-        return view('admin.sources.create');
+        //
     }
 
     /**
@@ -38,13 +38,7 @@ class SourcesController extends Controller
      */
     public function store(Request $request)
     {
-        $source = Source::create($request->only(['name', 'urlSource']));
-        if ($source) {
-            return redirect()->route('admin.sources.index')
-                ->with('success', 'Источник успешно добавлен');
-        }
-
-        return back() - with('error', 'Ошибка при добавлении источника');
+        // 
     }
 
     /**
@@ -64,10 +58,10 @@ class SourcesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Source $source)
+    public function edit(Order $order)
     {
-        return view('admin.sources.edit', [
-            'source' => $source
+        return view('admin.orders.edit', [
+            'order' => $order
         ]);
     }
 
@@ -78,15 +72,16 @@ class SourcesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Source $source)
+    public function update(Request $request, Order $order)
     {
-        $status = $source->fill($request->only(['name', 'urlSource']))->save();
+        $status = $order->fill($request->only(['name', 'phone', 'email', 'discription', 'status']))
+            ->save();
         if ($status) {
-            return redirect()->route('admin.sources.index')
-                ->with('success', 'Источник успешно обновлен');
+            return redirect()->route('admin.orders.index')
+                ->with('success', 'Заявка успешно обновлена');
         }
 
-        return back() - with('error', 'Ошибка при обновлении источника');
+        return back() - with('error', 'Ошибка при обновлении заявки');
     }
 
     /**

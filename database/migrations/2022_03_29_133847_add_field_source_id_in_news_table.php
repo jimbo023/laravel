@@ -16,6 +16,7 @@ class AddFieldSourceIdInNewsTable extends Migration
         Schema::table('news', function (Blueprint $table) {
             $table->foreignId('source_id')
                   ->after('id')
+                  ->nullable()
                   ->constrained('sources')
                   ->cascadeOnUpdate()
                   ->cascadeOnDelete();
