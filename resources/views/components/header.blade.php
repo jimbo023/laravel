@@ -6,6 +6,7 @@
         <ul class="list-unstyled">
           <li><a href="{{ route('order.create') }}" class="text-white">Заказать выгрузку</a></li>
           <li><a href="{{ route('feedback.index') }}" class="text-white">Оставить отзыв</a></li>
+          <li><a href="{{ route('account') }}" class="text-white">Перейти в аккаунт</a></li>
         </ul>
       </div>
     </div>
