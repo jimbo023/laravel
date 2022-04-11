@@ -5,7 +5,7 @@
 </div>
 <br>
 @include('inc.messages')
-<form method="post" action="{{ route('admin.orders.update', ["order" => $order] ) }}">
+<form method="post" action="{{ route('admin.orders.update', [" order"=> $order] ) }}">
     @csrf
     @method('put')
 
@@ -31,7 +31,7 @@
             <option value="done" @if($order->status === old('status')) selected @endif>done</option>
             <option value="work" @if($order->status === old('status')) selected @endif>work</option>
         </select>
-      </div>
+    </div>
     <br />
     <button type="submit" class="btn btn-secondary btn-sm" style="margin: auto; display: flex">Сохранить</button>
 </form>
