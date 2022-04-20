@@ -41,9 +41,12 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
+                                <a href="{{ route('auth.redirect', ['network' => 'github']) }}"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" style="width:25px"></a>
+                                <a href="{{ route('auth.redirect', ['network' => 'vkontakte']) }}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/VK_Compact_Logo_%282021-present%29.svg/1200px-VK_Compact_Logo_%282021-present%29.svg.png" style="width:25px"></a>
+
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
+                
                                     <label class="form-check-label" for="remember">
                                         {{ __('Запомнить меня') }}
                                     </label>

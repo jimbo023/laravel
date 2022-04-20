@@ -12,8 +12,12 @@ use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\SourcesController as AdminSourcesController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\Account\IndexController as AccountIndexController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+
+use function PHPUnit\Framework\callback;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +42,8 @@ Route::group(['middleware' => "auth"], function () {
         Route::resource('sources', AdminSourcesController::class);
         Route::resource('orders', AdminOrderController::class);
         Route::resource('users', AdminUserController::class);
+        Route::get('parser', ParserController::class)
+                    ->name('parser');
     });
 
     // Other routes
@@ -53,7 +59,12 @@ Route::group(['middleware' => "auth"], function () {
     Route::resource('order', OrderController::class);
 });
 
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('/auth/{network}/redirect', [SocialController::class, 'index'])
+    ->name('auth.redirect');
+    Route::get('/auth/{network}/callback', [SocialController::class, 'callback'])
+    ->name('auth.callback');
+});
 
 Route::get('/account', AccountIndexController::class)->name('account');
-
 Auth::routes();
