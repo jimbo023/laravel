@@ -43,9 +43,19 @@
     </div>
     <div class="form-group">
         <label for="discription">Описание</label>
-        <input type="text" class="form-control" id="discription" name="discription" required="required" value="{{$news->discription}}">
+        <textarea class="form-control" id="discription" name="discription" required="required">{{$news->discription}}"</textarea>
     </div>
     <br />
     <button type="submit" class="btn btn-secondary btn-sm" style="margin: auto; display: flex">Сохранить</button>
 </form>
 @endsection
+@push('js')
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script type="text/javascript">
+    ClassicEditor
+        .create( document.querySelector( '#discription' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+@endpush

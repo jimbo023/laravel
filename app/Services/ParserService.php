@@ -3,22 +3,24 @@
 namespace App\Services;
 
 use App\Contracts\Parser as Contract;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Orchestra\Parser\Xml\Facade as Parsers;
+use Orchestra\Parser\Xml\Facade as Parser;
 
 class ParserService implements Contract
 {
-    protected string $url;
+    public string $url;
 
-    public function setUrl(string $url): self
+    /**
+     * @param string $url
+     * @return $this
+     */
+    /**
+     * @return void
+     */
+    public function saveNews(string $url): void
     {
-        $this->url = $url;
-        return $this;
-    }
-
-    public function saveNews()
-    {
-        $xml = Parsers::load($this->url);
+        $xml = Parser::load($url);
         $data = $xml->parse([
             'title' => [
                 'uses' => 'channel.title'
@@ -36,10 +38,27 @@ class ParserService implements Contract
                 'uses' => 'channel.item[title,link,guid,description,pubDate]'
             ]
         ]);
-        $json = json_encode($data);
-        $e = explode("/", $this->url);
-        $filename = end($e);
-        Storage::put("news/$filename", $json);
-    }
 
+        $newsList = $data['news'];
+
+        $category_id = DB::table('categories')->insertGetId([
+            'title' => $data['title'],
+            'discription' => $data['description'],
+        ]);
+
+        foreach ($newsList as $news) {
+            $sources_id = DB::table('sources')->insertGetId([
+                'name' => $data['title'],
+                'UrlSource' => $news['link'],
+            ]);
+
+            DB::table('news')->insert([
+                'title' => $news['title'],
+                'category_id' => $category_id,
+                'discription' => $news['description'],
+                'source_id' => $sources_id,
+                'image' => $data['image']
+            ]);
+        }
+    }
 }

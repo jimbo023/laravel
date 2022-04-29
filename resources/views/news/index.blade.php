@@ -7,7 +7,7 @@
           <img src="{{ $news->image }}" width="100%" height="100%">
       </a>
       <div class="card-body">
-        <p class="card-text">{{ $news->discription }}</p>
+        <p class="card-text">{!! $news->discription !!}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
             <a href="{{ route('news.show', ['id' => $news->id, 'category' => $news->category->title]) }}">
@@ -23,6 +23,9 @@
     <h2>Новостей данной категории нет</h2>
 @endforelse
 <br>
-{{-- {{ $newsList->links()}} --}}
+@endsection
+@section('paginate')
+    <br>
+    {{ $newsList->links()}}
 @endsection
 
