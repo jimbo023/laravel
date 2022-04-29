@@ -17,7 +17,6 @@ use App\Http\Controllers\Account\IndexController as AccountIndexController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 
-use function PHPUnit\Framework\callback;
 
 /*
 |--------------------------------------------------------------------------

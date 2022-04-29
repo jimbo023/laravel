@@ -10,6 +10,6 @@
 @endsection
 @section('content')
 <img src="{{ $show->image }}" width="100%" height="100%">
-<p class="lead text-muted">{{ $show->discription }}</p>
+{!! $show->discription !!}
 
 @endsection

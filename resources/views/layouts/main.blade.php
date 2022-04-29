@@ -39,7 +39,9 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           @yield('content')
         </div>
+          @yield('paginate')
       </div>
+
     </div>
   </main>
   <footer class="text-muted py-5">

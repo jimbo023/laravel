@@ -14,7 +14,7 @@ class NewsController extends Controller
     //     return view('news.index',[
     //         'newsList' => $news
     //     ]);
-    // }   
+    // }
 
     public function NewsCategory($newsCategoryId)
     {
@@ -25,7 +25,7 @@ class NewsController extends Controller
         };
 
         return view('news.index',[
-            'newsList' => News::where('category_id', $id)->get()
+            'newsList' => News::where('category_id', $id)->paginate(10)
         ]);
     }
 
